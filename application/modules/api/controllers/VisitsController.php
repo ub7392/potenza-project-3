@@ -14,10 +14,15 @@ class VisitsController extends Zend_Controller_Action
       $this->view->entries = $visits->fetchAll();
     }
 
-    public function signAction()
+    // Handle GET and return a specific resource item
+    public function getAction()
     {
-        // action body
+
     }
 
+    // Handle POST requests to create a new resource item
+    public function postAction()
+    {
 
+    }
 }

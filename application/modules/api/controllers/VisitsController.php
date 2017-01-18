@@ -17,12 +17,15 @@ class VisitsController extends Zend_Controller_Action
     // Handle GET and return a specific resource item
     public function getAction()
     {
+      //api/visits
+
+      //api/visits/:id
 
     }
 
     // Handle POST requests to create a new resource item
     public function postAction()
     {
-
+      //api/visits
     }
 }

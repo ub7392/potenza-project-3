@@ -17,6 +17,7 @@ class StatesController extends Zend_Controller_Action
     // Handle GET and return a specific resource item
     public function getAction()
     {
+      //api/states
 
     }
 }

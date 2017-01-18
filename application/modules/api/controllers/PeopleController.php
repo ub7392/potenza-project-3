@@ -19,13 +19,22 @@ class PeopleController extends Zend_Controller_Action
     // Handle GET and return a specific resource item
     public function getAction()
     {
+      //api/people
 
+
+      //api/people/:id
     }
 
     // Handle POST requests to create a new resource item
     public function postAction()
     {
+      //api/people
 
     }
 
+}
+//For those methods that operate on individual resources
+//(getAction(), putAction(), and deleteAction()), you can test for the identifier using the following:
+if (!$id = $this->_getParam('id', false)) {
+    // report error, redirect, etc.
 }

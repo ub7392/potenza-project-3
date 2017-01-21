@@ -10,9 +10,6 @@ class StatesController extends Zend_Controller_Action
 
     public function indexAction()
     {
-      $states = new Application_Model_StatesMapper();
-      $this->view->entries = $states->fetchAll();
+
     }
-
-
 }

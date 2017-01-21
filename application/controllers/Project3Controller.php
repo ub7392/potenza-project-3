@@ -12,6 +12,3 @@ class Project3Controller extends Zend_Controller_Action
     {
 
     }
-
-
-}

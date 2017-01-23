@@ -1,6 +1,6 @@
 <?php
 
-class Application_Model_StatesMapper
+class Api_Model_StatesMapper
 {
   protected $_dbTable;
 
@@ -19,12 +19,12 @@ class Application_Model_StatesMapper
   public function getDbTable()
   {
       if (null === $this->_dbTable) {
-          $this->setDbTable('Application_Model_DbTable_States');
+          $this->setDbTable('Api_Model_DbTable_States');
       }
       return $this->_dbTable;
   }
 
-  public function save(Application_Model_DbTable_States $states)
+  public function save(Api_Model_DbTable_States $states)
   {
       $data = array(
           'states_id' => $states->getStatesid(),
@@ -40,30 +40,67 @@ class Application_Model_StatesMapper
       }
   }
 
-  public function find($id, Application_Model_DbTable_States $states)
+  public function find()
   {
-      $result = $this->getDbTable()->find($states_id);
-      if (0 == count($result)) {
-          return;
+      $requestURI = parse_url($_SERVER['REQUEST_URI']);
+      $segments = explode('/', $requestURI['path']);
+      $apiVars = [];
+
+      $i = 2;
+      while($i < count($segments)){
+        if($segments[$i+1]) {
+            $apiVars[$segments[$i]] = $segments[$i+1];
+            $i += 2;
+        } else {
+            $apiVars[$segments[$i]] = 'null';
+            $i++;
+        }
       }
-      $row = $result->current();
-      $states->setId($row->states_id)
-                ->set($row->states_name)
-                ->set($row->states_abbreviation)
+
+      $result = $this->getDbTable()->fetchAll();
+      $entries = array();
+      foreach($result as $row){
+        $entry = new Api_Model_States();
+        $entry->setId($row->states_id)
+              ->set($row->states_name)
+              ->set($row->states_abbreviation);
+        $entries[] = $entry;
+      }
+
+      foreach($entries as $entryobj){
+        if($apiVars['states'] == $entryobj->id){
+          $resultArray[] = [
+            'states_id'           => $entryobj->states_id,
+            'states_name'         => $entryobj->states_name,
+            'states_abbreviation' => $entryobj->state_abbreviation
+          ];
+        }
+      }
+
+    echo json_encode($resultArray);
   }
 
   public function fetchAll()
   {
       $resultSet = $this->getDbTable()->fetchAll();
-      $entries   = array();
+      $entries = array();
       foreach ($resultSet as $row) {
-          $entry = new Application_Model_DbTable_States();
+          $entry = new Api_Model_States();
           $entry->setId($row->states_id)
-                ->setFirstname($row->states_name)
-                ->setLastname($row->states_abbreviation)
+                ->setStatename($row->states_name)
+                ->setStateabbreviation($row->states_abbreviation)
           $entries[] = $entry;
       }
-      return $entries;
+
+      foreach($entries as $entryobj){
+        $resultArray[] = [
+          'states_id'           => $entryobj->states_id,
+          'states_name'         => $entryobj->states_name,
+          'states_abbreviation' => $entryobj->states_abbreviation
+        ];
+      }
+
+      echo json_encode($resultArray);
   }
 
 }

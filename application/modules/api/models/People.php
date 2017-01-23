@@ -1,6 +1,6 @@
 <?php
 
-class Application_Model_People
+class Api_Model_People
 {
 
       protected $_favoritefood;
@@ -47,7 +47,7 @@ class Application_Model_People
 
       public function setFavoritefood($favorite_food)
       {
-          $this->_favoritefood = (string) $favorite_food;
+          $this->_favoritefood = (string)$favorite_food;
           return $this;
       }
 
@@ -58,7 +58,7 @@ class Application_Model_People
 
       public function setLastname($last_name)
       {
-          $this->_lastname = (string) $last_name;
+          $this->_lastname = (string)$last_name;
           return $this;
       }
 
@@ -69,7 +69,7 @@ class Application_Model_People
 
       public function setFirstname($first_name)
       {
-          $this->_firstname = $first_name;
+          $this->_firstname = (string)$first_name;
           return $this;
       }
 
@@ -80,7 +80,7 @@ class Application_Model_People
 
       public function setPeopleid($people_id)
       {
-          $this->_peopleid = (int) $people_id;
+          $this->_peopleid = (int)$people_id;
           return $this;
       }
 

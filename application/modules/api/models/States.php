@@ -1,6 +1,6 @@
 <?php
 
-class Application_Model_States
+class Api_Model_States
 {
 
       protected $_statesid;
@@ -46,7 +46,7 @@ class Application_Model_States
 
       public function setStatesid($states_id)
       {
-          $this->_statesid = (string) $states_id;
+          $this->_statesid = (string)$states_id;
           return $this;
       }
 
@@ -57,7 +57,7 @@ class Application_Model_States
 
       public function setStatename($states_name)
       {
-          $this->_statesname = (string) $states_name;
+          $this->_statesname = (string)$states_name;
           return $this;
       }
 
@@ -68,7 +68,7 @@ class Application_Model_States
 
       public function setStatesabbreviation($states_abbreviation)
       {
-          $this->_statesabbreviation = (string) $states_abbreviation;
+          $this->_statesabbreviation = (string)$states_abbreviation;
           return $this;
       }
 

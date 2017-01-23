@@ -1,6 +1,6 @@
 <?php
 
-class Application_Model_Project3Mapper
+class Api_Model_Project3Mapper
 {
-  
+
 }

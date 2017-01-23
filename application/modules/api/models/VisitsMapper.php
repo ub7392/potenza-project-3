@@ -1,6 +1,6 @@
 <?php
 
-class Application_Model_VisitsMapper
+class Api_Model_VisitsMapper
 {
   protected $_dbTable;
 
@@ -19,12 +19,12 @@ class Application_Model_VisitsMapper
   public function getDbTable()
   {
       if (null === $this->_dbTable) {
-          $this->setDbTable('Application_Model_DbTable_Visits');
+          $this->setDbTable('Api_Model_DbTable_Visits');
       }
       return $this->_dbTable;
   }
 
-  public function save(Application_Model_DbTable_Visits $visits)
+  public function save(Api_Model_DbTable_Visits $visits)
   {
       $data = array(
           'id' => $visits->getId(),
@@ -41,32 +41,71 @@ class Application_Model_VisitsMapper
       }
   }
 
-  public function find($id, Application_Model_DbTable_Visits $visits)
+  public function find()
   {
-      $result = $this->getDbTable()->find($id);
-      if (0 == count($result)) {
-          return;
-      }
-      $row = $result->current();
-      $visits->setId($row->id)
-                ->setPersonid($row->person_id)
-                ->setStateid($row->state_id)
-                ->setDatevisited($row->date_visited);
-  }
+      $requestURI = parse_url($_SERVER['REQUEST_URI']);
+      $segments = explode('/', $requestURI['path']);
+      $apiVars = [];
 
-  public function fetchAll()
-  {
-      $resultSet = $this->getDbTable()->fetchAll();
-      $entries   = array();
-      foreach ($resultSet as $row) {
-          $entry = new Application_Model_DbTable_Visits();
+      $i = 2;
+      while($i < count($segments)){
+        if($segments[$i+1]) {
+            $apiVars[$segments[$i]] = $segments[$i+1];
+            $i += 2;
+        } else {
+            $apiVars[$segments[$i]] = 'null';
+            $i++;
+        }
+      }
+
+      $result = $this->getDbTable()->fetchAll();
+      $entries = array();
+      foreach ($result as $row) {
+          $entry = new Api_Model_Visits();
           $entry->setId($row->id)
                 ->setPersonid($row->person_id)
                 ->setStateid($row->state_id)
                 ->setDatevisited($row->date_visited);
           $entries[] = $entry;
       }
-      return $entries;
+
+      foreach($entries as $entryobj){
+        if($apiVars['people'] == $entryobj->peopleid){
+          $resultArray[] = [
+            'id'          => $entryObj->id,
+            'person_id'    => $entryObj->person_id,
+            'state_id'     => $entryObj->state_id,
+            'date_visited' => $entryObj->date_visited
+          ];
+        }
+      }
+
+      echo json_encode($resultArray);
+  }
+
+  public function fetchAll()
+  {
+    $result = $this->getDbTable()->fetchAll();
+    $entries = array();
+    foreach ($result as $row) {
+        $entry = new Api_Model_Visits();
+        $entry->setId($row->id)
+              ->setPersonid($row->person_id)
+              ->setStateid($row->state_id)
+              ->setDatevisited($row->date_visited);
+        $entries[] = $entry;
+    }
+
+    foreach($entries as $entryobj){
+      $resultArray[] = [
+        'id'          => $entryObj->id,
+        'person_id'    => $entryObj->person_id,
+        'state_id'     => $entryObj->state_id,
+        'date_visited' => $entryObj->date_visited
+      ];
+    }
+
+    echo json_encode($resultArray);
   }
 
 }

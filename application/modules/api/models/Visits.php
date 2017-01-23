@@ -1,6 +1,6 @@
 <?php
 
-class Application_Model_Visits
+class Api_Model_Visits
 {
 
       protected $_datevisited;
@@ -47,7 +47,7 @@ class Application_Model_Visits
 
       public function setDatevisited($date_visited)
       {
-          $this->_datevisited = (string) $date_visited;
+          $this->_datevisited = (string)$date_visited;
           return $this;
       }
 
@@ -58,7 +58,7 @@ class Application_Model_Visits
 
       public function setPersonid($person_id)
       {
-          $this->_personid = (string) $person_id;
+          $this->_personid = (string)$person_id;
           return $this;
       }
 
@@ -69,7 +69,7 @@ class Application_Model_Visits
 
       public function setStateid($state_id)
       {
-          $this->_stateid = $state_id;
+          $this->_stateid = (string)$state_id;
           return $this;
       }
 
@@ -80,7 +80,7 @@ class Application_Model_Visits
 
       public function setId($id)
       {
-          $this->_id = (int) $id;
+          $this->_id = (int)$id;
           return $this;
       }
 

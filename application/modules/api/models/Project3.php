@@ -1,5 +1,5 @@
 <?php
-class Application_Model_Project3
+class Api_Model_Project3
 {
-  
+
 }

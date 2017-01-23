@@ -1,6 +1,6 @@
 <?php
 
-class Application_Model_PeopleMapper
+class Api_Model_PeopleMapper
 {
   protected $_dbTable;
 
@@ -19,12 +19,12 @@ class Application_Model_PeopleMapper
   public function getDbTable()
   {
       if (null === $this->_dbTable) {
-          $this->setDbTable('Application_Model_DbTable_People');
+          $this->setDbTable('Api_Model_DbTable_People');
       }
       return $this->_dbTable;
   }
 
-  public function save(Application_Model_DbTable_People $people)
+  public function save(Api_Model_People $people)
   {
       $data = array(
           'people_id' => $people->getPeopleid(),
@@ -41,32 +41,69 @@ class Application_Model_PeopleMapper
       }
   }
 
-  public function find($id, Application_Model_DbTable_People $people)
+  public function find()
   {
-      $result = $this->getDbTable()->find($people_id);
-      if (0 == count($result)) {
-          return;
-      }
-      $row = $result->current();
-      $people->setId($row->people_id)
-                ->setFirstname($row->first_name)
-                ->setLastname($row->last_name)
-                ->setFavoritefood($row->favorite_food);
-  }
+      $requestURI = parse_url($_SERVER['REQUEST_URI']);
+      $segments = explode('/', $requestURI['path']);
+      $apiVars = [];
 
-  public function fetchAll()
-  {
-      $resultSet = $this->getDbTable()->fetchAll();
-      $entries   = array();
-      foreach ($resultSet as $row) {
-          $entry = new Application_Model_DbTable_People();
+      $i = 2;
+      while($i < count($segments)){
+      	if($segments[$i+1]) {
+            $apiVars[$segments[$i]] = $segments[$i+1];
+            $i += 2;
+      	} else {
+            $apiVars[$segments[$i]] = 'null';
+            $i++;
+      	}
+      }
+
+      $result = $this->getDbTable()->fetchAll();
+      $entries = array();
+      foreach ($result as $row) {
+          $entry = new Api_Model_People();
           $entry->setId($row->people_id)
                 ->setFirstname($row->first_name)
                 ->setLastname($row->last_name)
                 ->setFavoriteFood($row->favorite_food);
           $entries[] = $entry;
       }
-      return $entries;
+
+      foreach($entries as $entryobj){
+        if($apiVars['people'] == $entryobj->people_id){
+          $resultArray[] = [
+            'people_id'     => $entryObj->people_id,
+            'first_name'    => $entryObj->first_name,
+            'last_name'     => $entryObj->last_name,
+            'favorite_food' => $entryObj->favorite_food
+          ];
+        }
+      }
+
+      echo json_encode($resultArray);
   }
 
+  public function fetchAll()
+  {
+      $result = $this->getDbTable()->fetchAll();
+      $entries = array();
+      foreach ($result as $row) {
+          $entry = new Api_Model_People();
+          $entry->setId($row->people_id)
+                ->setFirstname($row->first_name)
+                ->setLastname($row->last_name)
+                ->setFavoriteFood($row->favorite_food);
+          $entries[] = $entry;
+      }
+
+      foreach($entries as $entryObj){
+        $resultArray[] = [
+          'people_id'     => $entryObj->people_id,
+          'first_name'    => $entryObj->first_name,
+          'last_name'     => $entryObj->last_name,
+          'favorite_food' => $entryObj->favorite_food
+        ];
+      }
+      echo json_encode($resultArray);
+  }
 }

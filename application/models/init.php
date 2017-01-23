@@ -12,13 +12,13 @@ class Application_Model_Init{
     if(!$conn) {
         die("Connection failed: ".$conn->error);
     }else{
-        echo("Connected successfully \n");
+        //echo("Connected successfully \n");
     }
 
     $createDB="CREATE DATABASE IF NOT EXISTS ".$database;
     if(mysql_query($createDB))
     {
-      echo("Database exists \n");
+      //echo("Database exists \n");
     }else{
       echo ("CONNECTION FAILED ".$conn->error);
       die();
@@ -48,21 +48,21 @@ class Application_Model_Init{
               )";
 
     $addstates="INSERT INTO states
-                  (states_id, state_name, state_abbreviation)
-                  values(NULL, 'Louisiana', 'LA'),
-                        (NULL, 'Texas', 'TX'),
-                        (NULL, 'Alabama', 'AL'),
-                        (NULL, 'Mississippi', 'MS'),
-                        (NULL, 'Florida', 'FL'),
-                        (NULL, 'California', 'CA'),
-                        (NULL, 'New York', 'NY'),
-                        (NULL, 'Colorado', 'CO'),
-                        (NULL, 'Utah', 'UT'),
-                        (NULL, 'Tennessee', 'TN')";
+                  (state_name, state_abbreviation)
+                  values('Louisiana', 'LA'),
+                        ('Texas', 'TX'),
+                        ('Alabama', 'AL'),
+                        ('Mississippi', 'MS'),
+                        ('Florida', 'FL'),
+                        ('California', 'CA'),
+                        ('New York', 'NY'),
+                        ('Colorado', 'CO'),
+                        ('Utah', 'UT'),
+                        ('Tennessee', 'TN')";
 
     $result=mysql_query("SELECT * FROM states");
 
-    if(mysql_num_rows($result)==0){
+    if(mysql_num_rows($result)== 0){
       mysql_query($addstates);
     }
 
@@ -85,8 +85,28 @@ class Application_Model_Init{
       //echo("Visits table created \n");
     }else{
       echo("Error creating visits table: ".mysql_error());
-
     }
+
+    $addperson="INSERT INTO people
+                (first_name, last_name, favorite_food)
+                values('Laura', 'Bui', 'Candy')";
+
+    $result1=mysql_query("SELECT * FROM people");
+
+    if(mysql_num_rows($result1)== 0){
+      mysql_query($addperson);
+    }
+
+    $addvisit="INSERT INTO visits
+                (person_id, state_id, date_visited)
+                values('1', '1', '01/01/01')";
+
+    $result2=mysql_query("SELECT * FROM visits");
+
+    if(mysql_num_rows($result2)==0){
+      mysql_query($addvisit);
+    }
+
   }
 }
 ?>

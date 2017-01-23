@@ -28,14 +28,13 @@ function peopleDropdown(){
       $("#people option").not("#people_id").remove();
       $("#peoplevisit option").remove();
 
-      var len = data.length;
-      for(var i = 0; i < len; i++){
-        var id = data[i]["people_id"];
-        var firstname = data[i]["first_name"];
-        var lastname = data[i]["last_name"];
-        $("#people").append("<option value='"+id+"'>"+firstname+ " "+lastname+"</option>");
-        $("#peoplevisit").append("<option value='"+id+"'>"+firstname+ " "+lastname+"</option>");
-      }
+      $.each(data, function(i, datap){
+        var people_id = data[i]["people_id"];
+        var first_name = data[i]["first_name"];
+        var last_name = data[i]["last_name"];
+        $("#people").append("<option value='"+peopple_id+"'>"+first_name+ " "+last_name+"</option>");
+        $("#peoplevisit").append("<option value='"+people_id+"'>"+first_name+ " "+last_name+"</option>");
+      });
     },
     error: function(data){
       console.log("There is an error loading people.");
@@ -52,13 +51,12 @@ function stateDropdown(){
     success: function(data){
       $("#states option").remove();
 
-      var len = data.length;
-      for(var i = 0; i < len; i++){
-        var id = data[i]["states_id"];
-        var statename = data[i]["state_name"];
-        var stateabb = data[i]["state_abbreviation"];
-        $("#states").append("<option value='"+id+"'>"+statename+ " - "+stateabb+"</option>");
-      }
+      $.each(data, function(i, datap){
+        var states_id = data[i]["states_id"];
+        var states_name = data[i]["states_name"];
+        var states_abbreviation = data[i]["states_abbreviation"];
+        $("#states").append("<option value='"+states_id+"'>"+states_name+ " - "+states_abbreviation+"</option>");
+      });
     },
     error: function(data){
       console.log("There is an error loading states");
@@ -82,22 +80,22 @@ function info(){
         var len = data.length;
 
         if(len > 0){
-          var firstname = data[0]["first_name"];
-          var lastname = data[0]["last_name"];
-          var favoritefood = data[0]["favorite_food"];
+          var first_name = data[0]["first_name"];
+          var last_name = data[0]["last_name"];
+          var favorite_food = data[0]["favorite_food"];
 
-          $("#peopleInfo").append("<p></p><p>Name: " +firstname+ " " +lastname+ "</p><p>Favorite Food: " +favoritefood+ "</p><p>State(s) Visited: </p>");
+          $("#peopleInfo").append("<p></p><p>Name: " +first_name+ " " +last_name+ "</p><p>Favorite Food: " +favorite_food+ "</p><p>State(s) Visited: </p>");
 
 
           for(var i = 0; i < len; i++){
-            var state = data[i]["state_name"];
-            var stateabb = data[i]["state_abbreviation"];
-            var date = data[i]["date_visited"];
+            var state_name = data[i]["state_name"];
+            var state_abbreviation = data[i]["state_abbreviation"];
+            var date_visited = data[i]["date_visited"];
 
             if(jQuery.isEmptyObject(state)){
               $("#visitInfo").append("No visits were recorded");
             }else{
-              $("#visitInfo").append(" "+state+ " - " +stateabb+ " on " +date+ "</p>");
+              $("#visitInfo").append(" "+state_name+ " - " +state_abbreviation+ " on " +date_visited+ "</p>");
             }
           }
         }
@@ -110,11 +108,11 @@ function info(){
 }
 
 function addPerson(){
-  var firstname = document.getElementById("first_name").value;
-  var lastname = document.getElementById("last_name").value;
-  var favoritefood = document.getElementById("favorite_food").value;
+  var first_name = document.getElementById("first_name").value;
+  var last_name = document.getElementById("last_name").value;
+  var favorite_food = document.getElementById("favorite_food").value;
   //Check input Fields Should not be blanks.
-  if (firstname == '' || lastname == '' || favoritefood == '') {
+  if (first_name == '' || last_name == '' || favorite_food == '') {
   alert("Please Fill All Fields!");
   }else{
     $.ajax({

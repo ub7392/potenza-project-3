@@ -36,6 +36,7 @@
           <dbTableFile dbTableName="States"/>
           <dbTableFile dbTableName="Visits"/>
         </dbTableDirectory>
+        <modelFile modelName="Init"/>
         <modelFile modelName="Project3Mapper"/>
         <modelFile modelName="Project3"/>
         <modelFile modelName="People"/>
@@ -46,14 +47,42 @@
         <modelFile modelName="VisitsMapper"/>
       </modelsDirectory>
       <modulesDirectory>
-        <moduleDirectory moduleName="module">
+        <moduleDirectory moduleName="Api">
           <configsDirectory enabled="false"/>
-          <controllersDirectory/>
-          <layoutsDirectory enabled="false">
-            <layoutScriptsDirectory enabled="false"/>
-          </layoutsDirectory>
+          <controllersDirectory>
+            <controllerFile controllerName="People">
+              <actionMethod actionName="index"/>
+            </controllerFile>
+            <controllerFile controllerName="States">
+              <actionMethod actionName="index"/>
+            </controllerFile>
+            <controllerFile controllerName="Visits">
+              <actionMethod actionName="index"/>
+            </controllerFile>
+            <controllerFile controllerName="Project3">
+              <actionMethod actionName="index"/>
+            </controllerFile>
+            <controllerFile controllerName="Index">
+              <actionMethod actionName="index"/>
+            </controllerFile>
+          </controllersDirectory>
+          <layoutsDirectory enabled="false"/>
           <modelsDirectory>
-            <dbTableDirectory enabled="false"/>
+            <modelFile modelName="Project3"/>
+            <modelFile modelName="People"/>
+            <modelFile modelName="States"/>
+            <modelFile modelName="Visits"/>
+            <dbTableDirectory>
+              <dbtableFile dbTableName="People"/>
+            </dbTableDirectory>
+              <modelFile modelName="Project3Mapper"/>
+              <modelFile modelName="Project3"/>
+              <modelFile modelName="People"/>
+              <modelFile modelName="States"/>
+              <modelFile modelName="Visits"/>
+              <modelFile modelName="PeopleMapper"/>
+              <modelFile modelName="StatesMapper"/>
+              <modelFile modelName="VisitsMapper"/>
           </modelsDirectory>
           <servicesDirectory enabled="false"/>
           <viewsDirectory>

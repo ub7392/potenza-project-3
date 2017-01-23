@@ -100,13 +100,9 @@ class API_Model_PeopleMapper
 
       //code breaks starting here
       foreach($entries as $entryObj){
-        $resultArray[] = [
-          'people_id'     => $entryObj->people_id,
-          'first_name'    => $entryObj->first_name,
-          'last_name'     => $entryObj->last_name,
-          'favorite_food' => $entryObj->favorite_food
-        ];
+        $resultArray[] = $entryObj->getPersonObject();
       }
+
       echo json_encode($resultArray);
   }
 }

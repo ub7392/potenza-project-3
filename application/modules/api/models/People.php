@@ -26,12 +26,27 @@ class API_Model_People
 
       public function __get($name)
       {
+			  return $this->$name;
+		  /*
           $method = 'get' . $name;
+		  /*
           if (('mapper' == $name) || !method_exists($this, $method)) {
               throw new Exception('Invalid get people property');
           }
           return $this->$method();
+		   */
       }
+
+	  public function getPersonObject()
+	  {
+		  return [
+			  'people_id' => $this->people_id,
+			  'first_name' => $this->first_name,
+			  'last_name' => $this->last_name,
+			  'favorite_food' => $this->favorite_food,
+		  ];
+
+	  }
 
       public function setOptions(array $options)
       {

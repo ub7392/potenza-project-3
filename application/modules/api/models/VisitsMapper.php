@@ -80,7 +80,7 @@ class API_Model_VisitsMapper
         }
       }
 
-      echo json_encode($resultArray);
+      return $resultArray;
   }
 
   public function fetchAll()
@@ -98,14 +98,14 @@ class API_Model_VisitsMapper
 
     foreach($entries as $entryObj){
       $resultArray[] = [
-        'id'           => $entryObj->id,
-        'person_id'    => $entryObj->person_id,
-        'state_id'     => $entryObj->state_id,
-        'date_visited' => $entryObj->date_visited
+        'id'           => $entryObj->Id,
+        'person_id'    => $entryObj->Personid,
+        'state_id'     => $entryObj->Stateid,
+        'date_visited' => $entryObj->Datevisited
       ];
     }
 
-    echo json_encode($resultArray);
+    return $resultArray;
   }
 
 }

@@ -76,7 +76,7 @@ class API_Model_StatesMapper
           ];
         }
       }
-    echo json_encode($resultArray);
+    return $resultArray;
   }
 
   public function fetchAll()
@@ -95,12 +95,12 @@ class API_Model_StatesMapper
       {
         $resultArray[] =
         [
-          'states_id'           => $entryObj->states_id,
-          'states_name'         => $entryObj->states_name,
-          'states_abbreviation' => $entryObj->states_abbreviation,
+          'states_id'           => $entryObj->Statesid,
+          'states_name'         => $entryObj->Statesname,
+          'states_abbreviation' => $entryObj->Statesabbreviation,
         ];
       }
-      echo json_encode($resultArray);
+      return $resultArray;
   }
 
 }

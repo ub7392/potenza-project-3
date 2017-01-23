@@ -11,12 +11,44 @@ class API_StatesController extends Zend_Controller_Action
     public function indexAction()
     {
       $states = new API_Model_StatesMapper();
-      $this->view->entries = $states->fetchAll();
+
+      try{
+        // 200 - Success
+        // 400 - Bad Request
+        // 500 - Server Error
+        $data = $states->fetchAll();
+
+        http_response_code(200);
+        header('Content-type: application/json');
+        echo json_encode($data);
+      }catch(\Exception $e){
+        $data = $e->getMessage();
+
+        http_response_code(500);
+        header('Content-type: application/json');
+        echo json_encode($data);
+      }
     }
 
     public function getAction()
     {
-      $data = new API_Model_StatesMapper();
-      $this->view->entries = $data->find();
+      $states = new API_Model_StatesMapper();
+
+      try{
+        // 200 - Success
+        // 400 - Bad Request
+        // 500 - Server Error
+        $data = $states->find();
+
+        http_response_code(200);
+        header('Content-type: application/json');
+        echo json_encode($data);
+      }catch(\Exception $e){
+        $data = $e->getMessage();
+
+        http_response_code(500);
+        header('Content-type: application/json');
+        echo json_encode($data);
+      }
     }
 }

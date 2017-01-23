@@ -59,7 +59,7 @@ class API_Model_PeopleMapper
       	}
       }
 
-      $result = $this->getDbTable()->fetchAll();
+      $result = $this->getDbTable()->find();
       $entries = array();
       foreach ($result as $row) {
           $entry = new API_Model_People();
@@ -72,17 +72,17 @@ class API_Model_PeopleMapper
 
       //this is where the code breaks
       foreach($entries as $entryObj){
-        if($apiVars['people'] == $entryObj->people_id){
+        if($apiVars['people'] == $entryObj->Peopleid){
           $resultArray[] = [
-            'people_id'     => $entryObj->people_id,
-            'first_name'    => $entryObj->first_name,
-            'last_name'     => $entryObj->last_name,
-            'favorite_food' => $entryObj->favorite_food
+            'people_id'     => $entryObj->Peopleid,
+            'first_name'    => $entryObj->Firstname,
+            'last_name'     => $entryObj->Lastname,
+            'favorite_food' => $entryObj->Favoritefood
           ];
         }
       }
 
-      echo json_encode($resultArray);
+      return $resultArray;
   }
 
   public function fetchAll()
@@ -98,15 +98,15 @@ class API_Model_PeopleMapper
           $entries[] = $entry;
       }
 
-      //code breaks starting here
       foreach($entries as $entryObj){
+        //$resultArray[] = $entryObj->getPersonObject();
         $resultArray[] = [
-          'people_id'     => $entryObj->people_id,
-          'first_name'    => $entryObj->first_name,
-          'last_name'     => $entryObj->last_name,
-          'favorite_food' => $entryObj->favorite_food
+          'people_id'     => $entryObj->Peopleid,
+          'first_name'    => $entryObj->Firstname,
+          'last_name'     => $entryObj->Lastname,
+          'favorite_food' => $entryObj->Favoritefood
         ];
       }
-      echo json_encode($resultArray);
+      return $resultArray;
   }
 }

@@ -24,19 +24,36 @@ class API_Model_People
           $this->$method($value);
       }
 
+	  /*
+	   * Function names prefaced with '__' are magic methods reserved by PHP
+	   * You can override them, to access private variables, methods
+	   * http://php.net/manual/en/language.oop5.magic.php
+	   */
       public function __get($name)
       {
-			  return $this->$name;
+
 		  /*
+		   * If you want to use magic method, just return property
+		   */
+		  //return $this->$name;
+
+		  /*
+		   * Commented code looks for a method named 'getname' and tries
+		   * to run it for each property passed, fails if no method exists
+		   */
+
           $method = 'get' . $name;
-		  /*
           if (('mapper' == $name) || !method_exists($this, $method)) {
               throw new Exception('Invalid get people property');
           }
+		 
           return $this->$method();
-		   */
       }
 
+
+	  /**
+	   * Method to get array object of a person
+	   */
 	  public function getPersonObject()
 	  {
 		  return [

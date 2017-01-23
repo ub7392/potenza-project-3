@@ -103,6 +103,7 @@ class API_Model_PeopleMapper
         $resultArray[] = $entryObj->getPersonObject();
       }
 
-      echo json_encode($resultArray);
+	  // echo json_encode($resultArray);
+	  return $resultArray;
   }
 }

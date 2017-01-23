@@ -8,11 +8,45 @@ class API_PeopleController extends Zend_Controller_Action
         /* Initialize action controller here */
     }
 
+	/**
+	 * Outputs JSON of all people
+	 */
     public function indexAction()
     {
       if($this->getRequest()->isGet()){
         $people = new API_Model_PeopleMapper();
-        $this->view->entries = $people->fetchAll();
+        //$this->view->entries = $people->fetchAll();
+		//
+		//
+		
+		//$returnVariable = $people->fetchAll();
+		//
+		//Try Catch:
+		//Try attempts to evaluate the code block and if
+		//it encounters an exception, the catch statement executes
+		try {
+			// 200 - Success
+			// 400 - Bad Request
+			// 500 - Server Error
+			$data = $people->fetchAll();
+
+			http_response_code(200);
+			header('Content-type: application/json');
+			echo json_encode($data);
+			die();
+			//$this->_helper->json($data);
+
+		} catch (\Exception $e) {
+			$data = $e->getMessage();
+
+
+			http_response_code(500);
+			header('Content-type: application/json');
+			echo json_encode($data);
+			die();
+			//$this->_helper->json($data);
+		}
+
       }else if($this->getRequest()->isPost()){
         $data = $this->getRequest()->isPost();
         $peopledata = new API_Model_People;

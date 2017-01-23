@@ -32,7 +32,7 @@ function peopleDropdown(){
         var people_id = data[i]["people_id"];
         var first_name = data[i]["first_name"];
         var last_name = data[i]["last_name"];
-        $("#people").append("<option value='"+peopple_id+"'>"+first_name+ " "+last_name+"</option>");
+        $("#people").append("<option value='"+people_id+"'>"+first_name+ " "+last_name+"</option>");
         $("#peoplevisit").append("<option value='"+people_id+"'>"+first_name+ " "+last_name+"</option>");
       });
     },

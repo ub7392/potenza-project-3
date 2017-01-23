@@ -1,12 +1,12 @@
 <?php
 
-class Api_Model_Visits
+class API_Model_Visits
 {
 
-      protected $_datevisited;
-      protected $_stateid;
-      protected $_personid;
-      protected $_id;
+      protected $date_visited;
+      protected $state_id;
+      protected $person_id;
+      protected $id;
 
       public function __construct(array $options = null)
       {
@@ -47,46 +47,46 @@ class Api_Model_Visits
 
       public function setDatevisited($date_visited)
       {
-          $this->_datevisited = (string)$date_visited;
+          $this->date_visited = (string)$date_visited;
           return $this;
       }
 
       public function getDatevisited()
       {
-          return $this->_datevisited;
+          return $this->date_visited;
       }
 
       public function setPersonid($person_id)
       {
-          $this->_personid = (string)$person_id;
+          $this->person_id = (string)$person_id;
           return $this;
       }
 
       public function getPersonid()
       {
-          return $this->_personid;
+          return $this->person_id;
       }
 
       public function setStateid($state_id)
       {
-          $this->_stateid = (string)$state_id;
+          $this->state_id = (string)$state_id;
           return $this;
       }
 
       public function getStateid()
       {
-          return $this->_stateid;
+          return $this->state_id;
       }
 
       public function setId($id)
       {
-          $this->_id = (int)$id;
+          $this->id = (int)$id;
           return $this;
       }
 
       public function getId()
       {
-          return $this->_id;
+          return $this->id;
       }
 
 }

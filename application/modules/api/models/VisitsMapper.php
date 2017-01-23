@@ -1,6 +1,6 @@
 <?php
 
-class Api_Model_VisitsMapper
+class API_Model_VisitsMapper
 {
   protected $_dbTable;
 
@@ -19,12 +19,12 @@ class Api_Model_VisitsMapper
   public function getDbTable()
   {
       if (null === $this->_dbTable) {
-          $this->setDbTable('Api_Model_DbTable_Visits');
+          $this->setDbTable('API_Model_DbTable_Visits');
       }
       return $this->_dbTable;
   }
 
-  public function save(Api_Model_DbTable_Visits $visits)
+  public function save(API_Model_DbTable_Visits $visits)
   {
       $data = array(
           'id' => $visits->getId(),
@@ -61,7 +61,7 @@ class Api_Model_VisitsMapper
       $result = $this->getDbTable()->fetchAll();
       $entries = array();
       foreach ($result as $row) {
-          $entry = new Api_Model_Visits();
+          $entry = new API_Model_Visits();
           $entry->setId($row->id)
                 ->setPersonid($row->person_id)
                 ->setStateid($row->state_id)
@@ -69,8 +69,8 @@ class Api_Model_VisitsMapper
           $entries[] = $entry;
       }
 
-      foreach($entries as $entryobj){
-        if($apiVars['people'] == $entryobj->peopleid){
+      foreach($entries as $entryObj){
+        if($apiVars['visits'] == $entryObj->id){
           $resultArray[] = [
             'id'          => $entryObj->id,
             'person_id'    => $entryObj->person_id,
@@ -88,7 +88,7 @@ class Api_Model_VisitsMapper
     $result = $this->getDbTable()->fetchAll();
     $entries = array();
     foreach ($result as $row) {
-        $entry = new Api_Model_Visits();
+        $entry = new API_Model_Visits();
         $entry->setId($row->id)
               ->setPersonid($row->person_id)
               ->setStateid($row->state_id)
@@ -96,9 +96,9 @@ class Api_Model_VisitsMapper
         $entries[] = $entry;
     }
 
-    foreach($entries as $entryobj){
+    foreach($entries as $entryObj){
       $resultArray[] = [
-        'id'          => $entryObj->id,
+        'id'           => $entryObj->id,
         'person_id'    => $entryObj->person_id,
         'state_id'     => $entryObj->state_id,
         'date_visited' => $entryObj->date_visited

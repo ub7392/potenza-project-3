@@ -1,12 +1,12 @@
 <?php
 
-class Api_Model_People
+class API_Model_People
 {
 
-      protected $_favoritefood;
-      protected $_lastname;
-      protected $_firstname;
-      protected $_peopleid;
+      protected $favorite_food;
+      protected $last_name;
+      protected $first_name;
+      protected $people_id;
 
       public function __construct(array $options = null)
       {
@@ -19,7 +19,7 @@ class Api_Model_People
       {
           $method = 'set' . $name;
           if (('mapper' == $name) || !method_exists($this, $method)) {
-              throw new Exception('Invalid people property');
+              throw new Exception('Invalid set people property');
           }
           $this->$method($value);
       }
@@ -28,7 +28,7 @@ class Api_Model_People
       {
           $method = 'get' . $name;
           if (('mapper' == $name) || !method_exists($this, $method)) {
-              throw new Exception('Invalid people property');
+              throw new Exception('Invalid get people property');
           }
           return $this->$method();
       }
@@ -47,46 +47,46 @@ class Api_Model_People
 
       public function setFavoritefood($favorite_food)
       {
-          $this->_favoritefood = (string)$favorite_food;
+          $this->favorite_food = (string)$favorite_food;
           return $this;
       }
 
       public function getFavoritefood()
       {
-          return $this->_favoritefood;
+          return $this->favorite_food;
       }
 
       public function setLastname($last_name)
       {
-          $this->_lastname = (string)$last_name;
+          $this->last_name = (string)$last_name;
           return $this;
       }
 
       public function getLastname()
       {
-          return $this->_lastname;
+          return $this->last_name;
       }
 
       public function setFirstname($first_name)
       {
-          $this->_firstname = (string)$first_name;
+          $this->first_name = (string)$first_name;
           return $this;
       }
 
       public function getFirstname()
       {
-          return $this->_firstname;
+          return $this->first_name;
       }
 
       public function setPeopleid($people_id)
       {
-          $this->_peopleid = (int)$people_id;
+          $this->people_id = (int)$people_id;
           return $this;
       }
 
-      public function getId()
+      public function getPeopleid()
       {
-          return $this->_peopleid;
+          return $this->people_id;
       }
 
 }

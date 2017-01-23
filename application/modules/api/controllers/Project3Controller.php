@@ -1,6 +1,6 @@
 <?php
 
-class Project3Controller extends Zend_Controller_Action
+class Api_Project3Controller extends Zend_Controller_Action
 {
 
     public function init()

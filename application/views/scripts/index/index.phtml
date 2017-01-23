@@ -63,7 +63,7 @@
   <center>
     <div class="header">Select A Person</div>
     <select name = "people" id = "people" class = "dropdown-toggle">
-      <option id = "_peopleid">---Select Name---</option>
+      <option id = "people_id">---Select Name---</option>
     </select>
     <div id = "peopleInfo"></div>
     <div id = "visitInfo"></div>
@@ -78,9 +78,9 @@
         <div class="modal-header">Add A Person</div>
         <div class="modal-body">
           <form method="post" id="addperson">
-            <p>First Name: <input type="text" id = "_firstname" name="_firstname"></p>
-            <p>Last Name: <input type="text" id = "_lastname" name="_lastname"></p>
-            <p>Favorite Food: <input type="text" id = "_favoritefood" name="_favoritefood"></p>
+            <p>First Name: <input type="text" id = "first_name" name="first_name"></p>
+            <p>Last Name: <input type="text" id = "last_name" name="last_name"></p>
+            <p>Favorite Food: <input type="text" id = "favorite_food" name="favorite_food"></p>
             <button class="btn btn-default" type="submit" data-dismiss="modal" id = "submitperson" name = "submitperson">Submit</button>
             <button class="btn btn-default" type="close" data-dismiss = "modal"><a href = "index.php">Exit</a></button>
           </form>
@@ -98,9 +98,9 @@
         <div class="modal-header">Add A Visit</div>
         <div class="modal-body">
           <form method="post" id="addvisit">
-            <p>Select Person: <select name="_personid" id = "_personid"></select></p>
-            <p>Select State: <select name="_stateid" id="_stateid"></select></p>
-            <p>Date Visited: <input type="text" placeholder = "MM/DD/YY" id = "_datevisited" name="_datevisited"></p>
+            <p>Select Person: <select name="person_id" id = "person_id"></select></p>
+            <p>Select State: <select name="state_id" id="state_id"></select></p>
+            <p>Date Visited: <input type="text" placeholder = "MM/DD/YY" id = "date_visited" name="date_visited"></p>
             <button class="btn btn-default" type="submit" data-dismiss="modal" id = "submitvisit" name = "submitvisit">Submit</button>
             <button class="btn btn-default" type="close" data-dismiss = "modal"><a href = "index.php">Exit</a></button>
           </form>

@@ -1,6 +1,6 @@
 <?php
 
-class Api_Model_StatesMapper
+class API_Model_StatesMapper
 {
   protected $_dbTable;
 
@@ -19,12 +19,12 @@ class Api_Model_StatesMapper
   public function getDbTable()
   {
       if (null === $this->_dbTable) {
-          $this->setDbTable('Api_Model_DbTable_States');
+          $this->setDbTable('API_Model_DbTable_States');
       }
       return $this->_dbTable;
   }
 
-  public function save(Api_Model_DbTable_States $states)
+  public function save(API_Model_DbTable_States $states)
   {
       $data = array(
           'states_id' => $states->getStatesid(),
@@ -60,23 +60,22 @@ class Api_Model_StatesMapper
       $result = $this->getDbTable()->fetchAll();
       $entries = array();
       foreach($result as $row){
-        $entry = new Api_Model_States();
-        $entry->setId($row->states_id)
-              ->set($row->states_name)
-              ->set($row->states_abbreviation);
+        $entry = new API_Model_States();
+        $entry->setStatesid($row->states_id)
+              ->setStatesname($row->states_name)
+              ->setStatesabbreviation($row->states_abbreviation);
         $entries[] = $entry;
       }
 
-      foreach($entries as $entryobj){
-        if($apiVars['states'] == $entryobj->id){
+      foreach($entries as $entryObj){
+        if($apiVars['states'] == $entryObj->states_id){
           $resultArray[] = [
-            'states_id'           => $entryobj->states_id,
-            'states_name'         => $entryobj->states_name,
-            'states_abbreviation' => $entryobj->state_abbreviation
+            'states_id'           => $entryObj->states_id,
+            'states_name'         => $entryObj->states_name,
+            'states_abbreviation' => $entryObj->states_abbreviation
           ];
         }
       }
-
     echo json_encode($resultArray);
   }
 
@@ -84,22 +83,23 @@ class Api_Model_StatesMapper
   {
       $resultSet = $this->getDbTable()->fetchAll();
       $entries = array();
-      foreach ($resultSet as $row) {
-          $entry = new Api_Model_States();
-          $entry->setId($row->states_id)
-                ->setStatename($row->states_name)
-                ->setStateabbreviation($row->states_abbreviation)
-          $entries[] = $entry;
+      foreach($resultSet as $row)
+      {
+        $entry = new API_Model_States();
+        $entry->setStatesid($row->states_id)
+              ->setStatesname($row->states_name)
+              ->setStatesabbreviation($row->states_abbreviation);
+        $entries[] = $entry;
       }
-
-      foreach($entries as $entryobj){
-        $resultArray[] = [
-          'states_id'           => $entryobj->states_id,
-          'states_name'         => $entryobj->states_name,
-          'states_abbreviation' => $entryobj->states_abbreviation
+      foreach($entries as $entryObj)
+      {
+        $resultArray[] =
+        [
+          'states_id'           => $entryObj->states_id,
+          'states_name'         => $entryObj->states_name,
+          'states_abbreviation' => $entryObj->states_abbreviation,
         ];
       }
-
       echo json_encode($resultArray);
   }
 

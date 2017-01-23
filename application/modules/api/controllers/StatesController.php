@@ -1,6 +1,6 @@
 <?php
 
-class StatesController extends Zend_Controller_Action
+class API_StatesController extends Zend_Controller_Action
 {
 
     public function init()
@@ -10,14 +10,13 @@ class StatesController extends Zend_Controller_Action
 
     public function indexAction()
     {
-      $states = new Api_Model_StatesMapper();
+      $states = new API_Model_StatesMapper();
       $this->view->entries = $states->fetchAll();
     }
 
     public function getAction()
     {
-      $data = new Api_Model_StatesMapper();
+      $data = new API_Model_StatesMapper();
       $this->view->entries = $data->find();
-
     }
 }

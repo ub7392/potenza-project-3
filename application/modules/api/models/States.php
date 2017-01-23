@@ -1,11 +1,10 @@
 <?php
 
-class Api_Model_States
+class API_Model_States
 {
-
-      protected $_statesid;
-      protected $_statesname;
-      protected $_statesabbreviation;
+      protected $states_id;
+      protected $states_name;
+      protected $states_abbreviation;
 
       public function __construct(array $options = null)
       {
@@ -46,35 +45,35 @@ class Api_Model_States
 
       public function setStatesid($states_id)
       {
-          $this->_statesid = (string)$states_id;
+          $this->states_id = (string)$states_id;
           return $this;
       }
 
       public function getStatesid()
       {
-          return $this->_statesid;
+          return $this->states_id;
       }
 
-      public function setStatename($states_name)
+      public function setStatesname($states_name)
       {
-          $this->_statesname = (string)$states_name;
+          $this->states_name = (string)$states_name;
           return $this;
       }
 
-      public function getStatename()
+      public function getStatesname()
       {
-          return $this->_statesname;
+          return $this->states_name;
       }
 
       public function setStatesabbreviation($states_abbreviation)
       {
-          $this->_statesabbreviation = (string)$states_abbreviation;
+          $this->states_abbreviation = (string)$states_abbreviation;
           return $this;
       }
 
       public function getStatesabbreviation()
       {
-          return $this->_statesabbreviation;
+          return $this->states_abbreviation;
       }
 
 }

@@ -1,7 +1,4 @@
 <?php
-
-  $frontController = Zend_Controller_Front::getInstance();
-
   $route = new Zend_Controller_Router_Route(
   'api',
   array(
@@ -9,18 +6,18 @@
     'controller'  => 'index',
     'action'      => 'index'
   ));
-  $frontController->getRouter()->addroute('api', $route);
+  $router->addroute('api', $route);
 
   //api/people
   $people = new Zend_Controller_Router_Route(
-    'api/people',
+    'people',
     array(
       'module'      =>  'api',
       'controller'  =>  'people',
       'action'      =>  'index'
     )
   );
-  $frontController->getRouter()->addroute('people', $people);
+  $router->addroute('people', $people);
 
   //api/people/id
   $peopleid = new Zend_Controller_Router_Route(
@@ -31,7 +28,7 @@
       'action'      =>  'get'
     )
   );
-  $frontController->getRouter()->addroute('people_id', $peopleid);
+  $router->addroute('people_id', $peopleid);
 
   //api/states
   $states = new Zend_Controller_Router_Route(
@@ -42,7 +39,7 @@
       'action'      =>  'index'
     )
   );
-  $frontController->getRouter()->addroute('states', $states);
+  $router->addroute('states', $states);
 
   //api/states/id
   $statesid = new Zend_Controller_Router_Route(
@@ -53,7 +50,7 @@
       'action'      =>  'get'
     )
   );
-  $frontController->getRouter()->addroute('states_id', $statesid);
+  $router->addroute('states_id', $statesid);
 
   //api/visits
   $visits = new Zend_Controller_Router_Route(
@@ -64,7 +61,7 @@
       'action'      =>  'index'
     )
   );
-  $frontController->getRouter()->addroute('visits', $visits);
+  $router->addroute('visits', $visits);
 
   //api/visits/id
   $visitsid = new Zend_Controller_Router_Route(
@@ -75,4 +72,4 @@
       'action'      =>  'get'
     )
   );
-  $frontController->getRouter()->addroute('visits_id', $visitsid);
+  $router->addroute('visits_id', $visitsid);

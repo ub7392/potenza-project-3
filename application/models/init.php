@@ -43,12 +43,12 @@ class Application_Model_Init{
 
     $states="CREATE TABLE if not exists states
                (states_id  int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                state_name  varchar(255),
-                state_abbreviation  varchar(255)
+                states_name  varchar(255),
+                states_abbreviation  varchar(255)
               )";
 
     $addstates="INSERT INTO states
-                  (state_name, state_abbreviation)
+                  (states_name, states_abbreviation)
                   values('Louisiana', 'LA'),
                         ('Texas', 'TX'),
                         ('Alabama', 'AL'),

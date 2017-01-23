@@ -1,6 +1,6 @@
 <?php
 
-class Api_Model_PeopleMapper
+class API_Model_PeopleMapper
 {
   protected $_dbTable;
 
@@ -19,12 +19,12 @@ class Api_Model_PeopleMapper
   public function getDbTable()
   {
       if (null === $this->_dbTable) {
-          $this->setDbTable('Api_Model_DbTable_People');
+          $this->setDbTable('API_Model_DbTable_People');
       }
       return $this->_dbTable;
   }
 
-  public function save(Api_Model_People $people)
+  public function save(API_Model_People $people)
   {
       $data = array(
           'people_id' => $people->getPeopleid(),
@@ -33,7 +33,7 @@ class Api_Model_PeopleMapper
           'favorite_food' => $people->getFavoritefood()
       );
 
-      if (null === ($people_id = $people->getId())) {
+      if (null === ($people_id = $people->getPeopleid())) {
           unset($data['people_id']);
           $this->getDbTable()->insert($data);
       } else {
@@ -43,6 +43,7 @@ class Api_Model_PeopleMapper
 
   public function find()
   {
+
       $requestURI = parse_url($_SERVER['REQUEST_URI']);
       $segments = explode('/', $requestURI['path']);
       $apiVars = [];
@@ -61,16 +62,17 @@ class Api_Model_PeopleMapper
       $result = $this->getDbTable()->fetchAll();
       $entries = array();
       foreach ($result as $row) {
-          $entry = new Api_Model_People();
-          $entry->setId($row->people_id)
+          $entry = new API_Model_People();
+          $entry->setPeopleid($row->people_id)
                 ->setFirstname($row->first_name)
                 ->setLastname($row->last_name)
                 ->setFavoriteFood($row->favorite_food);
           $entries[] = $entry;
       }
 
-      foreach($entries as $entryobj){
-        if($apiVars['people'] == $entryobj->people_id){
+      //this is where the code breaks
+      foreach($entries as $entryObj){
+        if($apiVars['people'] == $entryObj->people_id){
           $resultArray[] = [
             'people_id'     => $entryObj->people_id,
             'first_name'    => $entryObj->first_name,
@@ -88,14 +90,15 @@ class Api_Model_PeopleMapper
       $result = $this->getDbTable()->fetchAll();
       $entries = array();
       foreach ($result as $row) {
-          $entry = new Api_Model_People();
-          $entry->setId($row->people_id)
+          $entry = new API_Model_People();
+          $entry->setPeopleid($row->people_id)
                 ->setFirstname($row->first_name)
                 ->setLastname($row->last_name)
                 ->setFavoriteFood($row->favorite_food);
           $entries[] = $entry;
       }
 
+      //code breaks starting here
       foreach($entries as $entryObj){
         $resultArray[] = [
           'people_id'     => $entryObj->people_id,

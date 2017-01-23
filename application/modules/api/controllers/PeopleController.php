@@ -1,6 +1,6 @@
 <?php
 
-class PeopleController extends Zend_Controller_Action
+class API_PeopleController extends Zend_Controller_Action
 {
 
     public function init()
@@ -11,22 +11,23 @@ class PeopleController extends Zend_Controller_Action
     public function indexAction()
     {
       if($this->getRequest()->isGet()){
-        $people = new Api_Model_PeopleMapper();
-        $this->view->entries = $peopleMapper->fetchAll();
-      }else if($this->getRequest()->isPost())){
+        $people = new API_Model_PeopleMapper();
+        $this->view->entries = $people->fetchAll();
+      }else if($this->getRequest()->isPost()){
         $data = $this->getRequest()->isPost();
-        $peopledata = new Api_Model_People;
-        $peopledata ->setFirstname($data['_firstname'])
-                    ->setLastname($data['_lastname'])
-                    ->setFavoritefood($data['_favoritefood']);
-        $map = new Api_Model_PeopleMapper();
+        $peopledata = new API_Model_People;
+        $peopledata ->setFirstname($data['first_name'])
+                    ->setLastname($data['last_name'])
+                    ->setFavoritefood($data['favorite_food']);
+        $map = new API_Model_PeopleMapper();
         $map->save($peopledata);
       }
+
     }
 
     public function getAction()
     {
-      $map = new Api_Model_PeopleMapper();
+      $map = new API_Model_PeopleMapper();
       $this->view->entries = $map->find();
     }
 }

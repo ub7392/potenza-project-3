@@ -27,9 +27,9 @@ class API_Model_PeopleMapper
   public function save(API_Model_People $people)
   {
       $data = array(
-          'people_id' => $people->getPeopleid(),
-          'first_name'   => $people->getFirstname(),
-          'last_name' => $people->getLastname(),
+          'people_id'     => $people->getPeopleid(),
+          'first_name'    => $people->getFirstname(),
+          'last_name'     => $people->getLastname(),
           'favorite_food' => $people->getFavoritefood()
       );
 
@@ -41,46 +41,28 @@ class API_Model_PeopleMapper
       }
   }
 
-  public function find()
+  public function find($data)
   {
 
-      $requestURI = parse_url($_SERVER['REQUEST_URI']);
-      $segments = explode('/', $requestURI['path']);
-      $apiVars = [];
-
-      $i = 2;
-      while($i < count($segments)){
-      	if($segments[$i+1]) {
-            $apiVars[$segments[$i]] = $segments[$i+1];
-            $i += 2;
-      	} else {
-            $apiVars[$segments[$i]] = 'null';
-            $i++;
-      	}
+      $result = $this->getDbTable()->find($data);
+      if (0 == count($result)){
+        return;
       }
+      $people = new API_Model_People();
 
-      $result = $this->getDbTable()->find();
-      $entries = array();
-      foreach ($result as $row) {
-          $entry = new API_Model_People();
-          $entry->setPeopleid($row->people_id)
-                ->setFirstname($row->first_name)
-                ->setLastname($row->last_name)
-                ->setFavoriteFood($row->favorite_food);
-          $entries[] = $entry;
-      }
+      $row = $result->current();
+      $people->setPeopleid($row->people_id)
+            ->setFirstname($row->first_name)
+            ->setLastname($row->last_name)
+            ->setFavoriteFood($row->favorite_food);
 
-      //this is where the code breaks
-      foreach($entries as $entryObj){
-        if($apiVars['people'] == $entryObj->Peopleid){
-          $resultArray[] = [
-            'people_id'     => $entryObj->Peopleid,
-            'first_name'    => $entryObj->Firstname,
-            'last_name'     => $entryObj->Lastname,
-            'favorite_food' => $entryObj->Favoritefood
-          ];
-        }
-      }
+      $resultArray[] =
+      [
+        'people_id'     => $people->Peopleid,
+        'first_name'    => $people->Firstname,
+        'last_name'     => $people->Lastname,
+        'favorite_food' => $people->Favoritefood
+      ];
 
       return $resultArray;
   }
@@ -99,7 +81,6 @@ class API_Model_PeopleMapper
       }
 
       foreach($entries as $entryObj){
-        //$resultArray[] = $entryObj->getPersonObject();
         $resultArray[] = [
           'people_id'     => $entryObj->Peopleid,
           'first_name'    => $entryObj->Firstname,

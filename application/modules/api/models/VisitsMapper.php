@@ -41,44 +41,26 @@ class API_Model_VisitsMapper
       }
   }
 
-  public function find()
+  public function find($data)
   {
-      $requestURI = parse_url($_SERVER['REQUEST_URI']);
-      $segments = explode('/', $requestURI['path']);
-      $apiVars = [];
-
-      $i = 2;
-      while($i < count($segments)){
-        if($segments[$i+1]) {
-            $apiVars[$segments[$i]] = $segments[$i+1];
-            $i += 2;
-        } else {
-            $apiVars[$segments[$i]] = 'null';
-            $i++;
-        }
+      $result = $this->getDbTable()->find($data);
+      if (0 == count($result)){
+        return;
       }
 
-      $result = $this->getDbTable()->fetchAll();
-      $entries = array();
-      foreach ($result as $row) {
-          $entry = new API_Model_Visits();
-          $entry->setId($row->id)
-                ->setPersonid($row->person_id)
-                ->setStateid($row->state_id)
-                ->setDatevisited($row->date_visited);
-          $entries[] = $entry;
-      }
+      $visits = new API_Model_Visits();
+      $row = $result->current();
+      $visits->setId($row->id)
+             ->setPersonid($row->person_id)
+             ->setStateid($row->state_id)
+             ->setDatevisited($row->date_visited);
 
-      foreach($entries as $entryObj){
-        if($apiVars['visits'] == $entryObj->id){
-          $resultArray[] = [
-            'id'          => $entryObj->id,
-            'person_id'    => $entryObj->person_id,
-            'state_id'     => $entryObj->state_id,
-            'date_visited' => $entryObj->date_visited
-          ];
-        }
-      }
+      $resultArray[] = [
+        'id'          => $visits->id,
+        'person_id'    => $visits->Personid,
+        'state_id'     => $visits->Stateid,
+        'date_visited' => $visits->Datevisited
+      ];
 
       return $resultArray;
   }

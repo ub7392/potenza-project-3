@@ -38,17 +38,20 @@ class API_StatesController extends Zend_Controller_Action
         // 200 - Success
         // 400 - Bad Request
         // 500 - Server Error
-        $data = $states->find();
+        $data = $this->getRequest()->getParam('states_id');
+        $find = $states->find($data);
 
         http_response_code(200);
         header('Content-type: application/json');
-        echo json_encode($data);
+        echo json_encode($find);
+        die();
       }catch(\Exception $e){
         $data = $e->getMessage();
 
         http_response_code(500);
         header('Content-type: application/json');
-        echo json_encode($data);
+        echo json_encode($find);
+        die();
       }
     }
 }

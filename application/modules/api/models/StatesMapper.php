@@ -40,43 +40,28 @@ class API_Model_StatesMapper
       }
   }
 
-  public function find()
+  public function find($data)
   {
-      $requestURI = parse_url($_SERVER['REQUEST_URI']);
-      $segments = explode('/', $requestURI['path']);
-      $apiVars = [];
+      $result = $this->getDbTable()->find($data);
 
-      $i = 2;
-      while($i < count($segments)){
-        if($segments[$i+1]) {
-            $apiVars[$segments[$i]] = $segments[$i+1];
-            $i += 2;
-        } else {
-            $apiVars[$segments[$i]] = 'null';
-            $i++;
-        }
+      if (0 == count($result)){
+        return;
       }
+      $states = new API_Model_States();
 
-      $result = $this->getDbTable()->fetchAll();
-      $entries = array();
-      foreach($result as $row){
-        $entry = new API_Model_States();
-        $entry->setStatesid($row->states_id)
-              ->setStatesname($row->states_name)
-              ->setStatesabbreviation($row->states_abbreviation);
-        $entries[] = $entry;
-      }
+      $row = $result->current();
+      $states->setStatesid($row->states_id)
+             ->setStatesname($row->states_name)
+             ->setStatesabbreviation($row->states_abbreviation);
 
-      foreach($entries as $entryObj){
-        if($apiVars['states'] == $entryObj->states_id){
-          $resultArray[] = [
-            'states_id'           => $entryObj->states_id,
-            'states_name'         => $entryObj->states_name,
-            'states_abbreviation' => $entryObj->states_abbreviation
-          ];
-        }
-      }
-    return $resultArray;
+      $resultArray[] =
+      [
+          'states_id'           => $states->Statesid,
+          'states_name'         => $states->Statesname,
+          'states_abbreviation' => $states->Statesabbreviation
+      ];
+
+      return $resultArray;
   }
 
   public function fetchAll()

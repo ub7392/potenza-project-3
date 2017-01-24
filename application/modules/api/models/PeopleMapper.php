@@ -52,9 +52,9 @@ class API_Model_PeopleMapper
 
       $row = $result->current();
       $people->setPeopleid($row->people_id)
-            ->setFirstname($row->first_name)
-            ->setLastname($row->last_name)
-            ->setFavoriteFood($row->favorite_food);
+             ->setFirstname($row->first_name)
+             ->setLastname($row->last_name)
+             ->setFavoriteFood($row->favorite_food);
 
       $resultArray[] =
       [

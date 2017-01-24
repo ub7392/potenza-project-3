@@ -64,12 +64,12 @@
   $router->addroute('visits', $visits);
 
   //api/visits/id
-  $id = new Zend_Controller_Router_Route(
-    'api/visits/:visits_id',
+  $visitsid = new Zend_Controller_Router_Route(
+    'api/visits/:person_id',
     array(
       'module'      =>  'api',
       'controller'  =>  'visits',
       'action'      =>  'get'
     )
   );
-  $router->addroute('id', $id);
+  $router->addroute('person_id', $visitsid);

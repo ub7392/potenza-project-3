@@ -32,6 +32,7 @@ function peopleDropdown(){
         var people_id = data[i]["people_id"];
         var first_name = data[i]["first_name"];
         var last_name = data[i]["last_name"];
+
         $("#people").append("<option value='"+people_id+"'>"+first_name+ " "+last_name+"</option>");
         $("#peoplevisit").append("<option value='"+people_id+"'>"+first_name+ " "+last_name+"</option>");
       });
@@ -67,7 +68,7 @@ function stateDropdown(){
 
 function info(){
   $("#people").change(function(){
-    var peopleid = $("#people").val();
+    var person_id = $("#people").val();
 
     $("#peopleInfo").empty();
     $("#visitInfo").empty();
@@ -75,30 +76,27 @@ function info(){
     $.ajax({
       type: "GET",
       dataType: "json",
-      url: "api/visits/" + peopleid,
+      url: "api/visits/" + person_id,
       success: function(data){
-        var len = data.length;
+        var first_name = data[0]["first_name"];
+        var last_name = data[0]["last_name"];
+        var favorite_food = data[0]["favorite_food"];
 
-        if(len > 0){
-          var first_name = data[0]["first_name"];
-          var last_name = data[0]["last_name"];
-          var favorite_food = data[0]["favorite_food"];
+        $("#peopleInfo").append("<p></p><p>Name: " +first_name+ " " +last_name+ "</p><p>Favorite Food: " +favorite_food+ "</p><p>State(s) Visited: </p>");
 
-          $("#peopleInfo").append("<p></p><p>Name: " +first_name+ " " +last_name+ "</p><p>Favorite Food: " +favorite_food+ "</p><p>State(s) Visited: </p>");
+            var len = data.length;
 
+            for(var i = 0; i < len; i++){
+              var states_name = data[i]["states_name"];
+              var states_abbreviation = data[i]["states_abbreviation"];
+              var date_visited = data[i]["date_visited"];
 
-          for(var i = 0; i < len; i++){
-            var state_name = data[i]["state_name"];
-            var state_abbreviation = data[i]["state_abbreviation"];
-            var date_visited = data[i]["date_visited"];
-
-            if(jQuery.isEmptyObject(state)){
+            if(jQuery.isEmptyObject(states_name))
+            {
               $("#visitInfo").append("No visits were recorded");
             }else{
-              $("#visitInfo").append(" "+state_name+ " - " +state_abbreviation+ " on " +date_visited+ "</p>");
-            }
-          }
-        }
+              $("#visitInfo").append(" "+states_name+" - "+states_abbreviation+" on " +date_visited+ "</p>");
+            }}
       },
       error: function(data){
         console.log(data);
@@ -122,12 +120,12 @@ function addPerson(){
       data: $("#addperson").serialize(),
       success: function(data){
       	console.log(data);
-        alert(data);
         peopleDropdown();
       },
       error: function(data){
        console.log("There is something wrong while adding this person");
        console.log(data);
+       peopleDropdown();
       }
     });
   }
@@ -147,7 +145,6 @@ function addVisit(){
        success: function(data)
        {
          console.log(data);
-         alert(data);
        },
        error: function(data){
         console.log("There is something wrong while adding your visit");

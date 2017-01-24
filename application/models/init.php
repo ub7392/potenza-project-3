@@ -77,7 +77,9 @@ class Application_Model_Init{
                (id  int NOT NULL PRIMARY KEY AUTO_INCREMENT,
                 person_id  int,
                 state_id  int,
-                date_visited  varchar(255)
+                date_visited  varchar(255),
+                FOREIGN KEY (person_id) REFERENCES people(people_id),
+                FOREIGN KEY (state_id) REFERENCES states(states_id)
                 );";
 
     if(mysql_query($visits)===TRUE)

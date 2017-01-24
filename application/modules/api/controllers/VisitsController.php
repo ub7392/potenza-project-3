@@ -30,13 +30,29 @@ class API_VisitsController extends Zend_Controller_Action
           echo json_encode($data);
         }
       }else if ($this->getRequest()->isPost()){
-        $data = $this->getRequest()->isPost();
-        $visitsdata = new API_Model_Visits();
-        $visitsdata ->setPersonid($data['person_id'])
-                    ->setStateid($data['state_id'])
-                    ->setDatevisited($data['date_visited']);
-        $map = new API_Model_VisitsMapper();
-        $map->save($visitsdata);
+        try{
+          // 200 - Success
+          // 400 - Bad Request
+          // 500 - Server Error
+          $data = $this->getRequest()->getPost();
+
+          $visits = new API_Model_Visits();
+          $visits ->setPersonid($data['peoplevisit'])
+                  ->setStateid($data['states'])
+                  ->setDatevisited($data['date_visited']);
+          $map = new API_Model_VisitsMapper();
+          $map->save($visits);
+
+          http_response_code(200);
+          die();
+        }catch(\Exception $e){
+          $data = $e->getMessage();
+
+          http_response_code(500);
+          header('Content-type: application/json');
+          echo json_encode($data);
+          die();
+        }
       }
     }
 
@@ -48,7 +64,7 @@ class API_VisitsController extends Zend_Controller_Action
         // 200 - Success
         // 400 - Bad Request
         // 500 - Server Error
-        $data = $this->getRequest()->getParam('visits_id');
+        $data = $this->getRequest()->getParam('person_id');
         $find = $visits->find($data);
 
         http_response_code(200);
@@ -60,7 +76,7 @@ class API_VisitsController extends Zend_Controller_Action
 
         http_response_code(500);
         header('Content-type: application/json');
-        echo json_encode($find);
+        echo json_encode($data);
         die();
       }
     }

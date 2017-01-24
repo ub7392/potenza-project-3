@@ -24,12 +24,12 @@ class API_Model_VisitsMapper
       return $this->_dbTable;
   }
 
-  public function save(API_Model_DbTable_Visits $visits)
+  public function save(API_Model_Visits $visits)
   {
       $data = array(
-          'id' => $visits->getId(),
-          'person_id'   => $visits->getPersonid(),
-          'state_id' => $visits->getStateid(),
+          'id'           => $visits->getId(),
+          'person_id'  => $visits->getPersonid(),
+          'state_id'       => $visits->getStateid(),
           'date_visited' => $visits->getDatevisited()
       );
 
@@ -43,27 +43,54 @@ class API_Model_VisitsMapper
 
   public function find($data)
   {
-      $result = $this->getDbTable()->find($data);
-      if (0 == count($result)){
-        return;
+      mysql_connect('localhost', 'root', 'root');
+      mysql_select_db('project3');
+
+      $query = "SELECT
+                  people.first_name,
+                  people.last_name,
+                  people.favorite_food,
+                  states.states_name,
+                  states.states_abbreviation,
+                  visits.date_visited
+                  FROM people
+                  INNER JOIN visits ON visits.person_id = people.people_id
+                  INNER JOIN states ON states.states_id = visits.state_id
+                  WHERE people.people_id = '$data' ";
+
+        $result = mysql_query($query);
+
+        while($row = mysql_fetch_array($result)){
+          $response[] = [
+            'first_name' => $row['first_name'],
+            'last_name' => $row['last_name'],
+            'favorite_food' => $row['favorite_food'],
+            'states_name' => $row['states_name'],
+            'states_abbreviation' => $row['states_abbreviation'],
+            'date_visited' => $row['date_visited']
+          ];
+        }
+
+        if(empty($response))
+        {
+          $sql = "SELECT * FROM people
+                    WHERE people_id = '$data' ";
+
+          $r = mysql_query($sql);
+          while($row = mysql_fetch_array($r)){
+            $response[] = [
+              'first_name' => $row['first_name'],
+              'last_name' => $row['last_name'],
+              'favorite_food' => $row['favorite_food'],
+            ];
+          }
+          return $response;
+        }else{
+
+        return $response;
       }
 
-      $visits = new API_Model_Visits();
-      $row = $result->current();
-      $visits->setId($row->id)
-             ->setPersonid($row->person_id)
-             ->setStateid($row->state_id)
-             ->setDatevisited($row->date_visited);
-
-      $resultArray[] = [
-        'id'          => $visits->id,
-        'person_id'    => $visits->Personid,
-        'state_id'     => $visits->Stateid,
-        'date_visited' => $visits->Datevisited
-      ];
-
-      return $resultArray;
-  }
+}
 
   public function fetchAll()
   {
@@ -86,7 +113,6 @@ class API_Model_VisitsMapper
         'date_visited' => $entryObj->Datevisited
       ];
     }
-
     return $resultArray;
   }
 

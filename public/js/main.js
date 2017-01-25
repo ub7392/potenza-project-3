@@ -73,7 +73,7 @@ function info(){
     $("#peopleInfo").empty();
     $("#visitInfo").empty();
 
-    /*$.ajax({
+    $.ajax({
       type: "GET",
       dataType: "json",
       url: "api/visits/" + person_id,
@@ -84,24 +84,25 @@ function info(){
 
         $("#peopleInfo").append("<p></p><p>Name: " +first_name+ " " +last_name+ "</p><p>Favorite Food: " +favorite_food+ "</p><p>State(s) Visited: </p>");
 
-            var len = data.length;
+        var len = data.length;
 
-            for(var i = 0; i < len; i++){
-              var states_name = data[i]["states_name"];
-              var states_abbreviation = data[i]["states_abbreviation"];
-              var date_visited = data[i]["date_visited"];
+        for(var i = 0; i < len; i++){
+          var states_name = data[i]["states_name"];
+          var states_abbreviation = data[i]["states_abbreviation"];
+          var date_visited = data[i]["date_visited"];
 
-            if(jQuery.isEmptyObject(states_name))
-            {
-              $("#visitInfo").append("No visits were recorded");
-            }else{
-              $("#visitInfo").append(" "+states_name+" - "+states_abbreviation+" on " +date_visited+ "</p>");
-            }}
+          if(jQuery.isEmptyObject(states_name)){
+            $("#visitInfo").append("No visits were recorded");
+          }else{
+            $("#visitInfo").append(" "+states_name+" - "+states_abbreviation+" on " +date_visited+ "</p>");
+          }
+        }
       },
       error: function(data){
         console.log(data);
       }
-    });*/
+    });
+    /*
     $.ajax({
       type: "GET",
       dataType: "json",
@@ -117,7 +118,7 @@ function info(){
         console.log(data);
       }
     });
-    
+
     $.ajax({
       type: "GET",
       dataType: "json",
@@ -141,8 +142,7 @@ function info(){
       error: function(data){
         console.log(data);
       }
-    });
-
+    });*/
   });
 }
 
@@ -180,7 +180,7 @@ function addVisit(){
   }else{
 	   $.ajax({
        type: "POST",
-      // dataType: "json",
+       dataType: "json",
        url: "api/visits",
        data: $("#addvisit").serialize(),
        success: function(data)

@@ -68,6 +68,22 @@ class API_VisitsController extends Zend_Controller_Action
         $data = $this->getRequest()->getParam('person_id');
         $find = $visits->find($data);
 
+        /*$states = new API_Model_StatesMapper();
+        $state = array();
+        $result = $states->fetchAll($find);
+        $entries = array();
+        foreach($result as $row)
+        {
+          $entry = new API_Model_States();
+          $entry->setStatesid($row->states_id)
+                ->setStatesname($row->states_name)
+                ->setStatesabbreviation($row->states_abbreviation);
+          $entries[] = $entry;
+        }
+        //$state = $visits->$states->state_name;
+        echo json_encode($result);
+        die();*/
+
         http_response_code(200);
         header('Content-type: application/json');
         echo json_encode($find);

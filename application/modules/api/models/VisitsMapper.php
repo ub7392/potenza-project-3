@@ -43,7 +43,7 @@ class API_Model_VisitsMapper
 
   public function find($data)
   {
-      /*$query = "SELECT
+      $query = "SELECT
                   people.first_name,
                   people.last_name,
                   people.favorite_food,
@@ -83,10 +83,9 @@ class API_Model_VisitsMapper
           }
           return $response;
         }else{
-
         return $response;
-      }*/
-      $result = $this->getDbTable()->fetchAll($data);
+      }
+      /*$result = $this->getDbTable()->fetchAll($data);
       $entries   = array();
       foreach ($result as $row) {
         $entry = new API_Model_Visits();
@@ -96,6 +95,13 @@ class API_Model_VisitsMapper
               ->setDatevisited($row->date_visited);
         $entries[] = $entry;
       }
+
+      /*$visits = new API_Model_Visits();
+      $states = new API_Model_StatesMapper();
+      $resut = $states->find();
+
+      echo json_encode($resut);
+      die();
 
       foreach($entries as $entryObj){
         if($entryObj->Personid === $data){
@@ -112,7 +118,7 @@ class API_Model_VisitsMapper
         {
           return $resultArray = null;
         }
-    return $resultArray;
+    return $resultArray;*/
   }
 
   public function fetchAll()

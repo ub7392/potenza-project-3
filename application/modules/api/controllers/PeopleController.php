@@ -45,7 +45,8 @@ class API_PeopleController extends Zend_Controller_Action
           $map = new API_Model_PeopleMapper();
           $map->save($people);
 
-          http_response_code(200);
+          header('Content-type: application/json');
+          echo json_encode(http_response_code(200));
           die();
         }catch(\Exception $e){
           $data = $e->getMessage();

@@ -73,7 +73,7 @@ function info(){
     $("#peopleInfo").empty();
     $("#visitInfo").empty();
 
-    $.ajax({
+    /*$.ajax({
       type: "GET",
       dataType: "json",
       url: "api/visits/" + person_id,
@@ -101,7 +101,48 @@ function info(){
       error: function(data){
         console.log(data);
       }
+    });*/
+    $.ajax({
+      type: "GET",
+      dataType: "json",
+      url: "api/people/" + person_id,
+      success: function(data){
+        var first_name = data[0]["first_name"];
+        var last_name = data[0]["last_name"];
+        var favorite_food = data[0]["favorite_food"];
+
+        $("#peopleInfo").append("<p></p><p>Name: " +first_name+ " " +last_name+ "</p><p>Favorite Food: " +favorite_food+ "</p><p>State(s) Visited: </p>");
+      },
+      error: function(data){
+        console.log(data);
+      }
     });
+    
+    $.ajax({
+      type: "GET",
+      dataType: "json",
+      url: "api/visits/" + person_id,
+      success: function(data){
+        if(data != null)
+        {
+          var len = data.length;
+          for(var i = 0; i < len; i++){
+            //var states_name = data[i]["states_name"];
+            //var states_abbreviation = data[i]["states_abbreviation"];
+            var state_id = data[i]["state_id"];
+            var date_visited = data[i]["date_visited"];
+          //$("#visitInfo").append(" "+states_name+" - "+states_abbreviation+" on " +date_visited+ "</p>");
+          $("#visitInfo").append(" "+state_id+" on " +date_visited+ "</p>");
+        }
+        }else{
+          $("#visitInfo").append("No visits were recorded");
+        }
+      },
+      error: function(data){
+        console.log(data);
+      }
+    });
+
   });
 }
 
@@ -119,13 +160,13 @@ function addPerson(){
       url: "api/people",
       data: $("#addperson").serialize(),
       success: function(data){
+        console.log("Person successfully Added");
       	console.log(data);
         peopleDropdown();
       },
       error: function(data){
        console.log("There is something wrong while adding this person");
        console.log(data);
-       peopleDropdown();
       }
     });
   }
@@ -139,11 +180,12 @@ function addVisit(){
   }else{
 	   $.ajax({
        type: "POST",
-       dataType: "json",
+      // dataType: "json",
        url: "api/visits",
        data: $("#addvisit").serialize(),
        success: function(data)
        {
+         console.log("Visit successfully added");
          console.log(data);
        },
        error: function(data){

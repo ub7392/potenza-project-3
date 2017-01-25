@@ -28,8 +28,8 @@ class API_Model_VisitsMapper
   {
       $data = array(
           'id'           => $visits->getId(),
-          'person_id'  => $visits->getPersonid(),
-          'state_id'       => $visits->getStateid(),
+          'person_id'    => $visits->getPersonid(),
+          'state_id'     => $visits->getStateid(),
           'date_visited' => $visits->getDatevisited()
       );
 
@@ -43,10 +43,7 @@ class API_Model_VisitsMapper
 
   public function find($data)
   {
-      mysql_connect('localhost', 'root', 'root');
-      mysql_select_db('project3');
-
-      $query = "SELECT
+      /*$query = "SELECT
                   people.first_name,
                   people.last_name,
                   people.favorite_food,
@@ -88,9 +85,35 @@ class API_Model_VisitsMapper
         }else{
 
         return $response;
+      }*/
+      $result = $this->getDbTable()->fetchAll($data);
+      $entries   = array();
+      foreach ($result as $row) {
+        $entry = new API_Model_Visits();
+        $entry->setId($row->id)
+              ->setPersonid($row->person_id)
+              ->setStateid($row->state_id)
+              ->setDatevisited($row->date_visited);
+        $entries[] = $entry;
       }
 
-}
+      foreach($entries as $entryObj){
+        if($entryObj->Personid === $data){
+          $resultArray[] = [
+            'id'           => $entryObj->Id,
+            'person_id'    => $entryObj->Personid,
+            'state_id'     => $entryObj->Stateid,
+            'date_visited' => $entryObj->Datevisited
+          ];
+        }
+      }
+
+      if(empty($resultArray))
+        {
+          return $resultArray = null;
+        }
+    return $resultArray;
+  }
 
   public function fetchAll()
   {
@@ -115,5 +138,4 @@ class API_Model_VisitsMapper
     }
     return $resultArray;
   }
-
 }

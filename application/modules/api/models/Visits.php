@@ -19,7 +19,7 @@ class API_Model_Visits
       {
           $method = 'set' . $name;
           if (('mapper' == $name) || !method_exists($this, $method)) {
-              throw new Exception('Invalid Visits property');
+              throw new Exception('Invalid set Visits property');
           }
           $this->$method($value);
       }
@@ -28,7 +28,7 @@ class API_Model_Visits
       {
           $method = 'get' . $name;
           if (('mapper' == $name) || !method_exists($this, $method)) {
-              throw new Exception('Invalid Visits property');
+              throw new Exception('Invalid get Visits property');
           }
           return $this->$method();
       }

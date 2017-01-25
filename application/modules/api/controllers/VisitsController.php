@@ -43,7 +43,8 @@ class API_VisitsController extends Zend_Controller_Action
           $map = new API_Model_VisitsMapper();
           $map->save($visits);
 
-          http_response_code(200);
+          header('Content-type: application/json');
+          echo json_encode(http_response_code(200));
           die();
         }catch(\Exception $e){
           $data = $e->getMessage();
